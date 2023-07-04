@@ -1,0 +1,6 @@
+server:
+  port: 9991
+spring:
+  main:
+    banner-mode: 'OFF'
+    web-application-type: SERVLET

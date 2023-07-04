@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="UTF-8">
+   <title>myapp_saram.html</title>
+   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+   <div id="root"></div>
+
+   <script type="text/babel">
+      function InputSaram({appendSaram}) {
+         const [id, setId] = React.useState("");
+         const [name, setName] = React.useState("");
+         return (<>
+            id: <input value={id} onChange={(e) => setId(e.target.value)} /><br />
+            name: <input value={name} onChange={(e) => setName(e.target.value)} />
+            <button id="saveBtn" onClick={(e) => {
+               appendSaram(id, name);
+            }}>Save</button>
+         </>);
+      }
+
+      function App() {
+         // XMLHttpRequest사용.
+         function myAjax() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+               var list = JSON.parse(this.responseText);
+               setSaramList(list);
+            }
+            xhttp.open("GET", "saram");
+            xhttp.send();
+         }
+         // 브라우저에 기본 내장 된 fetch() API 사용
+         // https://developer.mozilla.org/ko/docs/Web/API/Request
+         function myFetchAjax() {
+            fetch("/myapp/saram").then((response) => {
+               if (response.status === 200) {
+                  return response.json();
+               }
+            }).then((response) => {
+               setSaramList(response);
+            });
+         }
+         const [saramList, setSaramList] = React.useState([]);
+         React.useEffect(function () {
+            //myAjax();
+            myFetchAjax();
+         }, []);
+
+function appendSaram(id, name) {
+            console.log("appendSaram - App : ", id, name);
+            // 1. server의 /myapp/saram의 POST요청
+            // 2. 결과를 setSaramList 한다. ==> 콤포넌트가 리랜더링 된다.
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function () {
+               var list = JSON.parse(this.responseText.trim());
+               setSaramList(list);
+            }
+            xhttp.open("POST", "/myapp/saram");
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(`id=${id}&name=${name}`);
+         }
+         return (<>
+            <h1>Hello World!</h1>
+            <InputSaram appendSaram={appendSaram} />
+            <table>
+               <tbody>{
+                  saramList.map(function (item, i) {
+                     return (<tr key={i}>
+                        <td>{item.idx}</td>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                     </tr>);
+                  })
+               }</tbody></table>
+         </>);
+      }
+
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />)
+   </script>
+</body>
+
+</html>

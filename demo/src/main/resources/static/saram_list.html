@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="UTF-8">
+   <title>Insert title here</title>
+</head>
+
+<body>
+
+   <h1>사람 목록</h1>
+   <table id="saramListTbl" border="1" width="100%">
+	   <a href="saram_input.html">추가</a>
+	   
+   </table>
+
+   <script>
+      // Ajax로 saramList 호출
+      // http://localhost:8949/saram  
+      // 주소는 같고... 
+      // GET으로 요청하면 List 
+      // Post로 요청하면 insert 된다.
+
+      const xhttp = new XMLHttpRequest();
+      xhttp.onload = function () {
+         var saramList = JSON.parse(this.responseText);
+         var saramListTbl = document.getElementById("saramListTbl");
+         saramListTbl.innerHTML = "";
+         for(var i=0; i<saramList.length; i++) {
+            var saram = saramList[i];
+            var row = `<tr>
+                  <td>${saram.idx}</td>
+                  <td>${saram.id}</td>
+                  <td>${saram.name}</td>
+               </tr>`;
+            saramListTbl.innerHTML += row;
+         }
+      }
+      xhttp.open("GET", "saram");
+      xhttp.send();
+   </script>
+</body>
+
+</html>
