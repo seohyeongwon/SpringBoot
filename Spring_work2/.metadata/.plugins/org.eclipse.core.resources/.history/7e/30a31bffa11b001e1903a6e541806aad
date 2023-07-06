@@ -1,0 +1,15 @@
+server:
+  port: 8889
+spring:
+
+  thymeleaf:
+    check-template-location: false
+
+  servlet:
+    multipart:
+      location: D:\\Temp\\upload
+      
+      max-file-size: 10MB
+      max-request-size:50MB
+        
+        

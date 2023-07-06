@@ -1,0 +1,2 @@
+server.port=8889
+spring.thymeleaf.check-template-location=false

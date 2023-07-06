@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    li>ul {
+      display: none ;
+    }
+
+  </style>
+  <script src="http://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+
+  <ul>
+    <li><a href="">Naver</a>
+    <ul>
+      <li>Item1</li>
+      <li>Item2</li>
+      <li>Item3</li>
+    </ul>
+    </li>
+    <li><a href="">Google</a>
+      <ul>
+        <li>Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+      </ul>
+  </li>
+    <li><a href="">Yahoo</a>
+      <ul>
+        <li>Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+      </ul>
+    </li>
+    <li><a href="">Facebook</a>
+      <ul>
+        <li>Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+      </ul>
+    </li>
+    <li><a href="">Kakao</a>
+      <ul>
+        <li>Item1</li>
+        <li>Item2</li>
+        <li>Item3</li>
+      </ul>
+    </li>
+  </ul>
+  
+  
+<script>
+// jQuery entry point
+
+$(function() {
+  $('ul li a').click(function(e) {
+    e.preventDefault();
+    $('li>ul').hide('slow');
+    $(this).next().show('slow');
+  });
+});
+
+</script>
+
+</body>
+</html>

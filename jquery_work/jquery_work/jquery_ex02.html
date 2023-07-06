@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="http://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+  
+<ul>
+  <li><a href="">Naver</a></li>
+  <li><a href="">Google</a></li>
+  <li><a href="">Yahoo</a></li>
+  <li><a href="">Facebook</a></li>
+  <li><a href="">Kakao</a></li>
+</ul>
+
+<script>
+// jQuery entry point
+$(function() {
+  $('ul li a').click(function(e) {
+    e.preventDefault();
+    $(this).parent().css('backgroundColor', 'orange').hide('slow');
+  });
+});
+
+</script>
+
+</body>
+</html>

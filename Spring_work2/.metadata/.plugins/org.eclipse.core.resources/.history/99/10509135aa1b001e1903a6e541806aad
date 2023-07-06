@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+   <h1 th:text="${title}" />
+   
+   <ul th:each="file: ${files}">
+      <li>
+         <span th:text="${file.fileName}" />
+         <a href="#" th:href="${'/download?uuid='+file.uuid+'&fileName='+file.fileName}">다운로드</a>
+      </li>   
+   </ul>
+
+
+
+</body>
+
+</html>

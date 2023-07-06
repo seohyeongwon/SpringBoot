@@ -1,0 +1,48 @@
+package org.comstudy.controller;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.comstudy.dto.FileDTO;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+@Controller
+public class FileUploadController {
+	
+	
+   
+   @GetMapping("/upload")
+   public String uploadForm(Model model) {
+      model.addAttribute("title", "Upload Form");
+      return "uploadForm";
+   }
+   
+   @PostMapping("/upload")
+   public String uploadResult(@RequestParam MultipartFile[] uploadfile, Model model) throws IllegalStateException, IOException {
+      List<FileDTO> files = new ArrayList<>();
+      
+      for(MultipartFile file: uploadfile) {
+          FileDTO fileDto = new FileDTO(UUID.randomUUID().toString(), 
+                file.getOriginalFilename(), 
+                file.getContentType());
+          files.add(fileDto);
+          
+         // uuid_파일명.png
+         File newFile = new File(((org.comstudy.dto.FileDTO) fileDto).getUuid()+"_"+((org.comstudy.dto.FileDTO) fileDto).getFileName());
+         file.transferTo(newFile);
+      }
+      
+      model.addAttribute("title", "업로드 결과");
+      model.addAttribute("files", files);
+      return "uploadResult";
+   }
+   
+}

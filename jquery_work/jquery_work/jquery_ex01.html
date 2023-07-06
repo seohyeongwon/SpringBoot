@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <style type="text/css">
+    #box {
+      background-color: yellow;
+      left: 0px;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="box"></div>
+
+  <script>
+    $(document).ready(function() {
+      //alert("jQuery is ready!");
+      //var box = document.getElementById("box");
+      //box.innerHTML = "Hello world!";
+
+      $("#box").html("<h1>안녕 세계!</h1>").css("color","red").click(function() {
+        $(this).animate({"left":"500px"}, 'slow');
+      });
+    });
+  </script>
+</body>
+</html>
