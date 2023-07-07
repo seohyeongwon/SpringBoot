@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery.js"></script>
+</head>
+<body>
+<h1>웹 소켓 클라이언트</h1>
+<form>
+   사용자 : <input id="sender" type="text" value="user1">
+   <input id="loginBtn" value="Login" type="button" />
+   <input id="closeBtn" value="Disconnect" type="button" /><br/>
+   받는이 : <input id="recipient" type="text" value="user2"><br/>
+   메세지 : <input id="txtMsg" type="text" value="hello"/> 
+   <input id="sendBtn" value="Send" type="button" />
+</form>
+<hr />
+<textarea id="msgTxtArea" rows="10" cols="50"></textarea>
+<script>
+   var socket = null;
+   function connection() {
+      // 클라이언트 쪽 리스너 함수(opopen, onclose, onmessage, onerror)
+      socket.onopen = function(message) {
+         console.log(">>> open ... ");
+      }
+      socket.onclose = function(message) {
+         console.log(">>> close ... ");
+      }
+      socket.onmessage = function(msgEvt) {
+         console.log(">>> message : ");
+         $('#msgTxtArea').append(msgEvt.data + "\n");
+      }
+      socket.onerror = function(message) {
+         console.log(">>> error ... ");
+      }
+   }
+   
+   $('#sendBtn').click(function(evt) {
+      evt.preventDefault();
+      socket.send($('#recipient').val() + "|\|" + $('#txtMsg').val());
+      $('#msgTxtArea').append("나: " + $('#txtMsg').val() + "\n");
+   });
+   
+   $('#loginBtn').click(function(evt) {
+      socket =  new WebSocket("ws://"+location.host+"/broadSocket/" + $('#sender').val());
+      if(socket != null) {
+         connection();
+      }
+   });
+   $('#closeBtn').click(function(evt) {
+      socket.close();
+   });
+</script>
+</body>
+</html>
